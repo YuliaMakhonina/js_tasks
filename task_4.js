@@ -13,14 +13,16 @@ inquirer
         ]
     }
   ]).then(answers => {
-    if (answers == 'Man')
+    
+    if (answers.response == 'Man')
     {
-        inquirer
+        
+       return inquirer
          .prompt([
             {
              type: 'checkbox',
              name: 'Procedures',
-             message: 'What did you like in our beauty shop?',
+             message: 'What of procedures did you try?',
              choices: [
                     {
                         name: 'Man haircut'
@@ -31,15 +33,16 @@ inquirer
                     ]      
             }
         ])
+        
     }
-    if (answers == 'Woman')
+    if (answers.response == 'Woman')
     {
-        inquirer
+        return inquirer
          .prompt([
             {
              type: 'checkbox',
              name: 'Procedures',
-             message: 'What did you like in our beauty shop?',
+             message: 'What of procedures did you try?',
              choices: [
                 {
                     name: 'Woman haircut'
@@ -58,57 +61,26 @@ inquirer
     }  
   
   )
-    .then( answer => {console.log(JSON.stringify(answer, null, '  ') ) });
+    .then(answers1=>{
+        
+        var arrayvalue = [];
+       
+         
+        for (const value of answers1.Procedures){
+           inquirer
+                    .prompt([
+                        {       type: 'list',
+                                name: 'you_liked',
+                                message: `Did you like ${value}?`,
+                                choices: ['Yes', 'No']
+                        }])
+            .then(answer2 => { if (answer2.you_liked == 'Yes'){arrayvalue.push(value);
+              console.log(JSON.stringify(arrayvalue, null, '  ') );}});
+        
+      }
+        console.log('You liked that procedures: ');
+        console.log(JSON.stringify(arrayvalue, null, '  ') );
+    }
+    );
+   // .then( answer => { console.log(JSON.stringify(answer, null, '  ') ); });
  
-
-
-
-
-
-
-  /*function nestedInquirer(param) {
-    if (param == 'Man')
-    {
-        inquirer
-         .prompt([
-            {
-             type: 'checkbox',
-             name: 'Procedures',
-             message: 'What did you like in our beauty shop?',
-             choices: [
-                    {
-                        name: 'Man haircut'
-                    },
-                    {
-                        name: 'Beard cutting'
-                    }
-                    ]      
-            }
-        ])
-    }
-    if (param == 'Woman')
-    {
-        inquirer
-         .prompt([
-            {
-             type: 'checkbox',
-             name: 'Procedures',
-             message: 'What did you like in our beauty shop?',
-             choices: [
-                {
-                    name: 'Woman haircut'
-                },
-                {
-                    name: 'Shugaring'
-                },
-                {
-                    name: 'Nails'
-                }
-                      ]      
-            }
-        ])
-    }
-  
-  }*/
-
-
